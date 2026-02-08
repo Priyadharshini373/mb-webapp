@@ -2,15 +2,13 @@ pipeline {
     agent any
 
     tools {
-        // Use the JDK and Maven configured in Jenkins
-        jdk 'Default'
-        maven 'Default'
+        jdk 'Default'    // matches your JDK in Jenkins
+        maven 'Maven'    // matches your Maven in Jenkins
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Replace with your GitHub repo URL
                 git branch: 'main', url: 'https://github.com/Priyadharshini373/mb-webapp.git'
             }
         }
@@ -23,7 +21,6 @@ pipeline {
 
         stage('Run') {
             steps {
-                // Optional: run the app to check it's working
                 sh 'mvn spring-boot:run &'
             }
         }
