@@ -7,6 +7,6 @@ public class MainTest {
 
     @Test
     public void sampleTest() {
-        assertTrue(true);
+        assertTrue(1 + 1 == 2);
     }
 }
