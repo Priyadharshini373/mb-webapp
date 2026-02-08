@@ -2,11 +2,12 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven3'  // Must match your Maven installation name
+        maven 'Maven3'  // Name of Maven installation in Jenkins
+        jdk 'Java17'    // Make sure Java17 is installed in Jenkins
     }
 
     environment {
-        SONAR_TOKEN = credentials('sonar-token')
+        SONAR_TOKEN = credentials('sonar-token') // Jenkins credentials ID for SonarQube token
     }
 
     stages {
@@ -25,13 +26,15 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQubeVM2') {
-                    sh '''
+                dir('') {  // Root of the project, where pom.xml exists
+                    withSonarQubeEnv('SonarQubeVM2') {
+                        sh """
                         mvn sonar:sonar \
                         -Dsonar.projectKey=my-webapp \
                         -Dsonar.host.url=http://16.112.131.238:9000 \
                         -Dsonar.login=$SONAR_TOKEN
-                    '''
+                        """
+                    }
                 }
             }
         }
