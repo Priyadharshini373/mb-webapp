@@ -2,12 +2,12 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven3'              // your Maven installation name in Jenkins
-        sonarScanner 'SonarScannerVM2'  // the SonarScanner tool you added
+        maven 'Maven3'              // must match Maven tool name in Jenkins
+        sonarRunner 'SonarScannerVM2'  // must match SonarScanner tool name
     }
 
     environment {
-        SONAR_TOKEN = credentials('sonar-token')  // the credential ID you created
+        SONAR_TOKEN = credentials('sonar-token')
     }
 
     stages {
