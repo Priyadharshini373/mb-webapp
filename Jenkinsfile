@@ -26,7 +26,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQubeVM2') {  // Name of your SonarQube server in Jenkins
-                    sh "sonar-scanner -Dsonar.projectKey=my-webapp -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN"
+                    sh "sonar-scanner -Dsonar.projectKey=my-webapp -Dsonar.host.url=http://16.112.131.238:9000 -Dsonar.login=$SONAR_TOKEN"
                 }
             }
         }
