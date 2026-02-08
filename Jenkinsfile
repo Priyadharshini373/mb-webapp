@@ -2,12 +2,11 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven3'              // must match Maven tool name in Jenkins
-        sonarRunner 'SonarScannerVM2'  // must match SonarScanner tool name
+        maven 'Maven3'  // Must match your Maven installation name
     }
 
     environment {
-        SONAR_TOKEN = credentials('sonar-token')
+        SONAR_TOKEN = credentials('sonar-token')  // the token you added in Jenkins Credentials
     }
 
     stages {
@@ -26,7 +25,9 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                sh "sonar-scanner -Dsonar.projectKey=my-webapp -Dsonar.host.url=http://18.60.156.191:9000 -Dsonar.login=$SONAR_TOKEN"
+                withSonarQubeEnv('SonarQubeVM2') {  // Name of your SonarQube server in Jenkins
+                    sh "sonar-scanner -Dsonar.projectKey=my-webapp -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN"
+                }
             }
         }
     }
