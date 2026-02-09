@@ -21,12 +21,14 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                sh """
-                    mvn sonar:sonar \
-                    -Dsonar.projectKey=my-webapp \
-                    -Dsonar.host.url=http://16.112.131.238:9000 \
-                    -Dsonar.login=squ_70959e6c561736a9fd40c8a21462c3e5300cbd91
-                """
+                withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                    sh """
+                        mvn sonar:sonar \
+                        -Dsonar.projectKey=my-webapp \
+                        -Dsonar.host.url=http://16.112.131.238:9000 \
+                        -Dsonar.login=${SONAR_TOKEN}
+                    """
+                }
             }
         }
     }
